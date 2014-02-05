@@ -1,7 +1,8 @@
 fs = require 'fs'
+p = require 'path'
 coffee = require 'coffee-script'
 stylus = require 'stylus'
-Rehab = require 'rehab'
+R = require 'rehab2'
 nib = require 'nib'
 
 ensureDir = ->
@@ -14,18 +15,52 @@ ensureDir = ->
 buildVendors = ->
 	ensureDir()
 	directory = __dirname+"/vendor/"
+	CMDirectory = __dirname+"/vendor/CodeMirror4/"
 	outputdir = __dirname+"/static/"
 	cssStr = ""
 	jsStr = ""
+	cmFiles = {
+		css: [
+			#core
+			'lib/codemirror.css'
+			#themes
+			'theme/neat.css'
+			'theme/elegant.css'
+		]
+		js: [
+			#core
+			'lib/codemirror.js'
+			#modes
+			'mode/coffeescript/coffeescript.js'
+			'mode/javascript/javascript.js'
+			#addons
+			'addon/lint/coffeescript-lint.js'
+			'addon/fold/indent-fold.js'
+			'addon/edit/closebrackets.js'
+			'addon/selection/mark-selection.js'
+			'addon/selection/active-line.js'
+		]
+	}
 	writeVendorsFiles = ->
 		fs.writeFileSync outputdir+"css/vendors.css", cssStr
 		fs.writeFileSync outputdir+"js/vendors.js", jsStr
+
 	cssFiles = fs.readdirSync directory+'css/'
+	cssFiles = (p.resolve(directory+'css/',fl) for fl in cssFiles)[...]
+	# add codemirror styles
+	for relpath in cmFiles.css
+		cssFiles.push p.resolve CMDirectory, relpath
+
 	jsFiles = fs.readdirSync directory+'js/'
-	for filename in cssFiles when filename.match /\.css$/i
-		cssStr += fs.readFileSync(directory+'css/'+filename)+'\n'
-	for filename in jsFiles when filename.match /\.js$/i
-		jsStr += fs.readFileSync(directory+'js/'+filename)+'\n'
+	jsFiles = (p.resolve(directory+'js/',fl) for fl in jsFiles)[...] 
+	# add codemirror scripts
+	for relpath in cmFiles.js
+		jsFiles.push p.resolve CMDirectory, relpath
+
+	for filepath in cssFiles when filepath.match /\.css$/i
+		cssStr += fs.readFileSync(filepath)+'\n'
+	for filepath in jsFiles when filepath.match /\.js$/i
+		jsStr += fs.readFileSync(filepath)+';\n'
 	writeVendorsFiles()
 	return null
 buildSrc = ->
@@ -42,10 +77,10 @@ buildSrcCoffee = ->
 			fs.writeFileSync path, data
 	#Compile CoffeeScript
 	coffeeDir = directory + 'coffee/'
-	coffeeOutput = ""
-	for filepath in new Rehab().process coffeeDir
-		coffeeOutput += coffee.compile fs.readFileSync(filepath, 'utf8'), {bare:true}
-	jsfiles["script.js"] = coffeeOutput
+	files = fs.readdirSync coffeeDir
+	for fl in files
+		r = new R(p.resolve coffeeDir, fl)
+		jsfiles[fl.replace(/coffee$/, 'js')] = r.compile()
 	writeFiles()
 buildSrcStylus = ->
 	directory = __dirname+"/src/"

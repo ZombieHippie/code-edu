@@ -1,21 +1,26 @@
 {
-  "name": "hatchling",
+  "name": "code-edu",
   "version": "0.0.1",
   "private": true,
+  "repository":{
+    "type":"git",
+    "url": "git://github.com/ZombieHippie/code-edu.git"
+  },
   "scripts": {
     "start": "coffee app.coffee"
   },
   "dependencies": {
-    "express": "*",
-    "jade": "*",
-    "mongoose": "*",
-    "coffee-script": "1.6.x",
-    "rehab":"*",
-    "nib":"*",
-    "stylus": "*",
+    "express": "latest",
+    "jade": "latest",
+    "mongoose": "latest",
+    "coffee-script": "latest",
+    "rehab2":"latest",
+    "nib":"latest",
+    "stylus": "latest",
     "methodder": "0.0.3"
   },
   "devDependencies": {
-    "devreload": "*"
+    "devreload": "latest",
+    "nodemon": "latest"
   }
 }

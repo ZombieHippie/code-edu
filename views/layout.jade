@@ -14,19 +14,22 @@ html
 					each v, k in nav
 						li
 							a(href=v)=k
-					if user
-						li
-							a
-								strong='@'+user.name
-						li
-							a(href="/logout")="Logout"
-					else
-						li
-							a(href="/login")="Login"
+					//-
+						if user
+							li
+								a
+									strong='@'+user.name
+							li
+								a(href="/logout")="Logout"
+						else
+							li
+								a(href="/login")="Login"
 		#page-overlay
 		#page
 			block content
+		block editor
 	footer
 		script(src='/js/vendors.js')
 		script(src='/js/script.js')
+		script(src='//localhost:9999/devreload.js')
 		block footer

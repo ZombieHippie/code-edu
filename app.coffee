@@ -4,15 +4,15 @@
 express = require 'express'
 routes = require './routes'
 http = require 'http'
-path = require 'path'
-mongoose = require 'mongoose'
-devreload = require 'devreload'
+p = require 'path'
+#mongoose = require 'mongoose'
 
 app = express()
 
+
 # all environments
 app.set('port', process.env.PORT || 3000)
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', p.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 app.locals.pretty = true; # Pretty output from jade
 
@@ -27,26 +27,21 @@ app.use(express.cookieParser('the truth')) #parses session cookies
 app.use(express.session())
 
 app.use(app.router)
-app.use(express.static(path.join(__dirname, 'static')))
+app.use(express.static(p.join(__dirname, 'static')))
 
 
 # development only
 if app.get('env') is 'development'
 	app.use(express.errorHandler())
-	# Use devreload for automatic reloading
-	devreload.listen app, {
-		watch:[__dirname+'/src',__dirname+'/static',__dirname+'/routes'],
-		interval:500, port:9999
-	}
 
 # Setup MongoDB
-mongoose.connect 'mongodb://localhost/app'
-db = {}
-db["User"] = mongoose.model 'User', require('./models/User'), 'users'
+#mongoose.connect 'mongodb://localhost/app'
+#db = {}
+#db["User"] = mongoose.model 'User', require('./models/User'), 'users'
 
 # Routes
 routes = require('./routes')
-new routes app, db
+new routes app
 
 http.createServer(app).listen app.get('port'), ->
 	console.log 'Express server listening on port ' + app.get 'port'

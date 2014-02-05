@@ -1,0 +1,11 @@
+extends layout
+
+block head
+	link(rel="stylesheet",href="/css/editor.css")
+
+block content
+	#editor
+		textarea#cm-coffeescript
+
+block footer
+	script(src="/js/editor.js")
