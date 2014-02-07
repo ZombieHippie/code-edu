@@ -24,8 +24,8 @@ buildVendors = ->
 			#core
 			'lib/codemirror.css'
 			#themes
-			'theme/neat.css'
-			'theme/elegant.css'
+			#'theme/neat.css'
+			#'theme/elegant.css'
 		]
 		js: [
 			#core
@@ -37,6 +37,7 @@ buildVendors = ->
 			'addon/lint/coffeescript-lint.js'
 			'addon/fold/indent-fold.js'
 			'addon/edit/closebrackets.js'
+			'addon/edit/matchbrackets.js'
 			'addon/selection/mark-selection.js'
 			'addon/selection/active-line.js'
 		]

@@ -1,35 +1,35 @@
 doctype html
 html
-	head
-		title= title
-		link(rel='stylesheet', href='/css/vendors.css')
-		link(rel='stylesheet', href='/css/style.css')
-		meta(name="viewport", content="width=device-width, initial-scale=1")
-		block head
-	body
-		.nav-drawer
-			button.nav-toggle Navigation
-			nav
-				ul.nav
-					each v, k in nav
-						li
-							a(href=v)=k
-					//-
-						if user
-							li
-								a
-									strong='@'+user.name
-							li
-								a(href="/logout")="Logout"
-						else
-							li
-								a(href="/login")="Login"
-		#page-overlay
-		#page
-			block content
-		block editor
-	footer
-		script(src='/js/vendors.js')
-		script(src='/js/script.js')
-		script(src='//localhost:9999/devreload.js')
-		block footer
+  head
+    title= title
+    link(rel='stylesheet', href='/css/vendors.css')
+    link(rel='stylesheet', href='/css/style.css')
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    block head
+  body
+    .nav-drawer
+      button.nav-toggle &amp;
+      nav
+        ul.nav
+          each v, k in nav
+            li
+              a(href=v)=k
+          //-
+            if user
+              li
+                a
+                  strong='@'+user.name
+              li
+                a(href="/logout")="Logout"
+            else
+              li
+                a(href="/login")="Login"
+    #page-overlay
+    #page
+      block content
+    block editor
+  footer
+    script(src='/js/vendors.js')
+    script(src='/js/script.js')
+    script(src='//localhost:9999/devreload.js')
+    block footer

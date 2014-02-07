@@ -37,6 +37,7 @@ start = ->
 	ndm {
 		script:'app.coffee'
 		watch
+		ext:'jade styl coffee'
 	}
 	.on 'restart', (files)->
 		checkGen ->
