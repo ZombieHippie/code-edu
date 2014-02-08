@@ -1,3 +1,12 @@
 [submodule "vendor/CodeMirror4"]
 	path = vendor/CodeMirror4
 	url = https://github.com/marijnh/CodeMirror.git
+[submodule "src/coffee/sublime-keymap"]
+	path = src/coffee/sublime-keymap
+	url = https://github.com/ZombieHippie/sublime-keymap.git
+[submodule "src/stylus/neon-education-theme"]
+	path = src/stylus/neon-education-theme
+	url = https://github.com/ZombieHippie/neon-education-theme.git
+[submodule "src/coffee/coffeescript-mode"]
+	path = src/coffee/coffeescript-mode
+	url = https://github.com/ZombieHippie/coffeescript-mode.git

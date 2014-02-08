@@ -12,11 +12,8 @@
   "dependencies": {
     "express": "latest",
     "jade": "latest",
-    "mongoose": "latest",
     "coffee-script": "latest",
-    "rehab2":"latest",
-    "nib":"latest",
-    "stylus": "latest",
+    "rehab2":"0.3.3",
     "methodder": "0.0.3"
   },
   "devDependencies": {

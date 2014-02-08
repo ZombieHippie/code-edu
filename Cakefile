@@ -1,19 +1,14 @@
+require 'coffee-script/register'
 fs = require 'fs'
 p = require 'path'
 coffee = require 'coffee-script'
-stylus = require 'stylus'
-R = require 'rehab2'
-nib = require 'nib'
+Rehab = require 'rehab2'
 
-ensureDir = ->
-	try
-		fs.mkdirSync dir = __dirname+'/static'
-		fs.mkdirSync dir + '/css'
-		fs.mkdirSync dir + '/js'
-	catch err
-		return
+try fs.mkdirSync dir = __dirname+'/static'
+try fs.mkdirSync dir + '/css'
+try fs.mkdirSync dir + '/js'
+
 buildVendors = ->
-	ensureDir()
 	directory = __dirname+"/vendor/"
 	CMDirectory = __dirname+"/vendor/CodeMirror4/"
 	outputdir = __dirname+"/static/"
@@ -67,7 +62,6 @@ buildVendors = ->
 	writeVendorsFiles()
 	return null
 buildSrc = ->
-	ensureDir()
 	buildSrcCoffee()
 	buildSrcStylus()
 buildSrcCoffee = ->
@@ -82,7 +76,7 @@ buildSrcCoffee = ->
 	coffeeDir = directory + 'coffee/'
 	files = fs.readdirSync coffeeDir
 	for fl in files
-		r = new R(p.resolve coffeeDir, fl)
+		r = new Rehab(p.resolve(coffeeDir, fl), 'coffee')
 		jsfiles[fl.replace(/coffee$/, 'js')] = r.compile()
 	#CodeMirror.js
 	jsfiles["codemirror.js"] = fs.readFileSync __dirname+"/vendor/CodeMirror4/lib/codemirror.js"
@@ -91,29 +85,20 @@ buildSrcStylus = ->
 	directory = __dirname+"/src/"
 	outputdir = __dirname+"/static/"
 	cssfiles = {}
-	#Compile Stylus
-	stylFiles = fs.readdirSync directory + 'stylus/'
-	stylTasks = stylFiles.length
 	writeFiles = ->
 		for filename, data of cssfiles
 			path = outputdir+"css/"+filename
 			fs.writeFileSync path, data
-	for filename in stylFiles when filename.match /\.styl$/i
-		stylus(fs.readFileSync directory+'stylus/'+filename, 'utf8')\
-		.use(nib()).render (err, css)->
-			if not err
-				cssfiles[filename.replace /\.styl$/i, '.css']=css
-			else console.error err
-			
-			stylTasks--
-			if not stylTasks
-				writeFiles()
+	stylusDir = directory + 'stylus/'
+	for fl in fs.readdirSync stylusDir
+		r = new Rehab(p.resolve(stylusDir, fl),'styl')
+		cssfiles[fl.replace(/\.styl$/i, '.css')] = r.compile()
+	writeFiles()
 
 task 'build', 'populate ./static files', (o)->
 	buildVendors()
 	buildSrc()
 task 'watch', 'watch to build ./static files', (o)->
-	ensureDir()
 	directory = __dirname+"/src/"
 	stylusFW = fs.watch directory + 'stylus/', {interval:500}
 	stylusFW.on 'change', ->
@@ -121,7 +106,6 @@ task 'watch', 'watch to build ./static files', (o)->
 		buildSrcStylus()
 	coffeeFW = fs.watch directory + 'coffee/', {interval:500}
 	coffeeFW.on 'change', ->
-
 		console.log 'Change detected on coffee files\nCompiling...'
 		buildSrcCoffee()
 task 'build:vendors', './vendor files to ./static files', buildVendors
