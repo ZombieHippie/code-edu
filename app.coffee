@@ -11,7 +11,7 @@ app = express()
 
 
 # all environments
-app.set('port', process.env.PORT || 3000)
+app.set('port', process.env.PORT || 8088)
 app.set('views', p.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 app.locals.pretty = true; # Pretty output from jade

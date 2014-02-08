@@ -1,4 +1,6 @@
 #_require coffeescript-mode
+#_require sublime-keys
+#_require escape-key
 
 window.editor = {}
 
@@ -8,12 +10,13 @@ editor.coffeescript = CodeMirror.fromTextArea document.getElementById("cm-coffee
   indentWithTabs: false
   indentUnit: 2
   theme: "edu"
+  highlightSelectionMatches: true
   styleSelectedText: true
   lineNumbers: true
   autoCloseBrackets: true
   showCursorWhenSelecting: true
   styleActiveLine: true
-  matchTags: true
+  #matchBrackets: true
   autofocus: true
   fontSize: 18
   extraKeys:
@@ -26,12 +29,11 @@ editor.coffeescript = CodeMirror.fromTextArea document.getElementById("cm-coffee
       cm.replaceSelection(spaces, "end", "+input")
 }
 
-$(window).on 'keyup', (e)->
-  if e.keyCode is 27 # Esc key
-    cursor = editor.coffeescript.getCursor()
-    editor.coffeescript.setCursor(cursor)
-    editor.coffeescript.focus()
+editor.coffeescript.addKeyMap sublimeKeys
 
+window.cm = editor.coffeescript
+
+cmEscapeKey editor.coffeescript
 
 editor.coffeescript.setValue """
 hash = require('../pass').hash

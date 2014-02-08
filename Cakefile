@@ -29,15 +29,18 @@ buildVendors = ->
 		]
 		js: [
 			#core
-			'lib/codemirror.js'
+			#'lib/codemirror.js' #build separately
 			#modes
 			'mode/coffeescript/coffeescript.js'
 			'mode/javascript/javascript.js'
+			'mode/xml/xml.js'
+			'mode/jade/jade.js'
 			#addons
 			'addon/lint/coffeescript-lint.js'
 			'addon/fold/indent-fold.js'
 			'addon/edit/closebrackets.js'
 			'addon/edit/matchbrackets.js'
+			'addon/search/match-highlighter.js'
 			'addon/selection/mark-selection.js'
 			'addon/selection/active-line.js'
 		]
@@ -82,6 +85,8 @@ buildSrcCoffee = ->
 	for fl in files
 		r = new R(p.resolve coffeeDir, fl)
 		jsfiles[fl.replace(/coffee$/, 'js')] = r.compile()
+	#CodeMirror.js
+	jsfiles["codemirror.js"] = fs.readFileSync __dirname+"/vendor/CodeMirror4/lib/codemirror.js"
 	writeFiles()
 buildSrcStylus = ->
 	directory = __dirname+"/src/"
