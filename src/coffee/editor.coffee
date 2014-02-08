@@ -1,24 +1,26 @@
-#_require coffeescript-mode
-#_require sublime-keys
+#_require coffeescript-mode/coffeescript-mode
+#_require sublime-keymap/sublime_keys
 #_require escape-key
 
 window.editor = {}
 
 editor.coffeescript = CodeMirror.fromTextArea document.getElementById("cm-coffeescript"), {
-  mode: "coffeescript2"
-  useTabs: false
+  mode: "coffeescript"
+  autofocus: true
   indentWithTabs: false
+  useTabs: false
   indentUnit: 2
+  fontSize: 18
   theme: "edu"
+  lineNumbers: true
+
+  showCursorWhenSelecting: true
   highlightSelectionMatches: true
   styleSelectedText: true
-  lineNumbers: true
-  autoCloseBrackets: true
-  showCursorWhenSelecting: true
   styleActiveLine: true
-  #matchBrackets: true
-  autofocus: true
-  fontSize: 18
+
+  autoCloseBrackets: true
+  sublimeKeys: true
   extraKeys:
     "Ctrl-Enter": (cm)->
       preview(cm)
@@ -29,10 +31,7 @@ editor.coffeescript = CodeMirror.fromTextArea document.getElementById("cm-coffee
       cm.replaceSelection(spaces, "end", "+input")
 }
 
-editor.coffeescript.addKeyMap sublimeKeys
-
 window.cm = editor.coffeescript
-
 cmEscapeKey editor.coffeescript
 
 editor.coffeescript.setValue """

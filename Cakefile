@@ -31,7 +31,7 @@ buildVendors = ->
 			#core
 			#'lib/codemirror.js' #build separately
 			#modes
-			'mode/coffeescript/coffeescript.js'
+			#'mode/coffeescript/coffeescript.js'
 			'mode/javascript/javascript.js'
 			'mode/xml/xml.js'
 			'mode/jade/jade.js'
@@ -39,7 +39,6 @@ buildVendors = ->
 			'addon/lint/coffeescript-lint.js'
 			'addon/fold/indent-fold.js'
 			'addon/edit/closebrackets.js'
-			'addon/edit/matchbrackets.js'
 			'addon/search/match-highlighter.js'
 			'addon/selection/mark-selection.js'
 			'addon/selection/active-line.js'
