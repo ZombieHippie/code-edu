@@ -3,7 +3,7 @@ cmEscapeKey= (cm)->
     if e.keyCode is 27 # Esc key
       # Find upmost range
       top = null
-      for range in cm.doc.sel.ranges
+      for range in cm.listSelections()
         if (not top?) or (top.anchor.line > range.anchor.line) or
             ((top.anchor.line is range.anchor.line) and
             (top.anchor.ch > range.anchor.ch))
@@ -11,5 +11,4 @@ cmEscapeKey= (cm)->
       if top is null
         return
       cm.setSelection top.anchor, top.head
-      cm.refresh()
       cm.focus()

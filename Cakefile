@@ -37,6 +37,8 @@ buildVendors = ->
 			'addon/search/match-highlighter.js'
 			'addon/selection/mark-selection.js'
 			'addon/selection/active-line.js'
+
+			'addon/selection/escape-reduce-selection.js'
 		]
 	}
 	writeVendorsFiles = ->

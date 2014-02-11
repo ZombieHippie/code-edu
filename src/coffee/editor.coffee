@@ -1,6 +1,6 @@
 #_require coffeescript-mode/coffeescript-mode
 #_require sublime-keymap/sublime_keys
-#_require escape-key
+
 
 window.editor = {}
 
@@ -18,6 +18,7 @@ editor.coffeescript = CodeMirror.fromTextArea document.getElementById("cm-coffee
   highlightSelectionMatches: true
   styleSelectedText: true
   styleActiveLine: true
+  escapeReducesSelections: true
 
   autoCloseBrackets: true
   sublimeKeys: true
@@ -32,7 +33,6 @@ editor.coffeescript = CodeMirror.fromTextArea document.getElementById("cm-coffee
 }
 
 window.cm = editor.coffeescript
-cmEscapeKey editor.coffeescript
 
 editor.coffeescript.setValue """
 hash = require('../pass').hash

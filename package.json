@@ -13,7 +13,7 @@
     "express": "latest",
     "jade": "latest",
     "coffee-script": "latest",
-    "rehab2":"0.3.3",
+    "rehab2":"latest",
     "methodder": "0.0.3"
   },
   "devDependencies": {
